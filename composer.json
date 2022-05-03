@@ -1,0 +1,27 @@
+{
+    "name": "anxiousv/slim-test",
+    "description": "Testing Slim framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Anxiousv\\SlimTest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dmitry Shcherbina",
+            "email": "shcherbinadmitry@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^4.10",
+        "slim/psr7": "^1.5",
+        "httpsoft/http-message": "^1.0",
+        "httpsoft/http-server-request": "^1.0",
+        "nyholm/psr7": "^1.5",
+        "nyholm/psr7-server": "^1.0",
+        "guzzlehttp/psr7": "^2.2",
+        "laminas/laminas-diactoros": "^2.9",
+        "slim/php-view": "^3.1"
+    }
+}
