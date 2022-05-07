@@ -7,6 +7,8 @@ require __DIR__ . '/../vendor/autoload.php';
 use Slim\Factory\AppFactory;
 use DI\Container;
 
+$users = ['mike', 'mishel', 'adel', 'keks', 'kamila'];
+
 $container = new Container();
 $container->set('renderer', function () {
     // Параметром передается базовая директория, в которой будут храниться шаблоны
@@ -16,28 +18,29 @@ $app = AppFactory::createFromContainer($container);
 $app->addErrorMiddleware(true, true, true);
 
 $app->get('/', function ($request, $response) {
-    $response->write('Welcome to Slim!');
-    return $response;
+  return $this->get('renderer')->render($response, 'index.phtml');
     // Благодаря пакету slim/http этот же код можно записать короче
     // return $response->write('Welcome to Slim!');
-});
-
-$app->get('/users', function ($request, $response) {
-  return $response->write('GET /users');
-});
-
-// $app->post('/users', function ($request, $response) {
-//   return $response->write('POST /users');
-// });
-
-$app->post('/users', function ($request, $response) {
-  return $response->withStatus(302);
 });
 
 $app->get('/courses/{id}', function ($request, $response, array $args) {
   $id = $args['id'];
   return $response->write("Course id: {$id}");
 });
+
+
+$app->get('/users', function ($request, $response) use ($users) {
+  $user = strtolower($request->getQueryParam('user'));
+  $filteredUsers = array_filter($users, fn($val) => str_contains($val, $user));
+  $params = ['users' => $filteredUsers, "user" => $user];
+  
+  return $this->get('renderer')->render($response, 'users/index.phtml', $params);
+});
+
+// $app->post('/users', function ($request, $response) {
+//   return $response->withStatus(302);
+// });
+
 
 $app->get('/users/{id}', function ($request, $response, $args) {
   $params = ['id' => $args['id'], 'nickname' => 'user-' . $args['id']];

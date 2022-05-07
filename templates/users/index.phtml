@@ -1,0 +1,13 @@
+<div>
+  <h1>All users page!</h1>
+  <a href="/">Return to main</a>
+  <div>
+    <form action="/users" method="get">
+      <input type="search" name="user" value="<?= htmlspecialchars($user) ?>"/>
+      <input type="submit" value="Search"/>
+    <form>
+    <?php foreach ($users as $user): ?>
+      <p><?= $user ?></p>
+    <?php endforeach; ?>
+  </div>
+</div>
